@@ -24,6 +24,18 @@
 	UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
 	self.navigationItem.rightBarButtonItem = addButton;
 	self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+
+	self.objects = [@[@"Lorem", @"ipsum", @"dolor", @"sit", @"amet,", @"consectetur", @"adipiscing", @"elit.", @"Donec", @"ut", @"adipiscing", @"massa.", @"Aliquam", @"vitae", @"nibh", @"ac", @"dui", @"lobortis"] mutableCopy];
+	
+	self.tableView.contentInset = UIEdgeInsetsMake(self.tableView.bounds.size.height - 44, 0, 0, 0);
+//	self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(self.tableView.bounds.size.height - 44, 0, 0, 0);
+	self.tableView.contentOffset = CGPointMake(0, self.tableView.bounds.size.height - 44);
+
+	UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, self.tableView.bounds.size.height)];
+	header.backgroundColor = [UIColor lightGrayColor];
+	header.isAccessibilityElement = NO;
+	
+//	self.tableView.tableHeaderView = header;
 }
 
 
@@ -65,11 +77,6 @@
 
 #pragma mark - Table View
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return 1;
-}
-
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	return self.objects.count;
 }
@@ -83,21 +90,6 @@
 	return cell;
 }
 
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-	// Return NO if you do not want the specified item to be editable.
-	return YES;
-}
-
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-	if (editingStyle == UITableViewCellEditingStyleDelete) {
-	    [self.objects removeObjectAtIndex:indexPath.row];
-	    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-	} else if (editingStyle == UITableViewCellEditingStyleInsert) {
-	    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-	}
-}
 
 
 @end

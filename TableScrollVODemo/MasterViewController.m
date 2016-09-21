@@ -27,15 +27,16 @@
 
 	self.objects = [@[@"Lorem", @"ipsum", @"dolor", @"sit", @"amet,", @"consectetur", @"adipiscing", @"elit.", @"Donec", @"ut", @"adipiscing", @"massa.", @"Aliquam", @"vitae", @"nibh", @"ac", @"dui", @"lobortis"] mutableCopy];
 	
-	self.tableView.contentInset = UIEdgeInsetsMake(self.tableView.bounds.size.height - 44, 0, 0, 0);
-//	self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(self.tableView.bounds.size.height - 44, 0, 0, 0);
-	self.tableView.contentOffset = CGPointMake(0, self.tableView.bounds.size.height - 44);
+	self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
+//	self.tableView.contentInset = UIEdgeInsetsMake(-self.tableView.bounds.size.height + 64 + 44, 0, 0, 0); // this breaks stickiness of section header view 
+	self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(64, 0, 0, 0);
+	self.tableView.contentOffset = CGPointMake(0, self.tableView.bounds.size.height - 44 - 64);
 
 	UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, self.tableView.bounds.size.height)];
-	header.backgroundColor = [UIColor lightGrayColor];
+	header.backgroundColor = [UIColor clearColor];
 	header.isAccessibilityElement = NO;
 	
-//	self.tableView.tableHeaderView = header;
+	self.tableView.tableHeaderView = header;
 }
 
 
@@ -90,6 +91,16 @@
 	return cell;
 }
 
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+	UITableViewHeaderFooterView *sectionHeader = [[UITableViewHeaderFooterView alloc] initWithReuseIdentifier:@"sectionHeader"];
+	UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Foo", @"Bar"]];
+	segmentedControl.frame = CGRectMake(15, 5, tableView.bounds.size.width - 30, 34);
+	[sectionHeader addSubview:segmentedControl];
+	return sectionHeader;
+}
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	return 44;
+}
 
 @end

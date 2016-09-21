@@ -328,6 +328,7 @@
 				AA9B72B41D906E7100CDF360 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
